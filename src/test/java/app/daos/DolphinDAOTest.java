@@ -88,4 +88,15 @@ class DolphinDAOTest {
         Person checkDeleted = dolphinDAO.getById(p2.getId());
         assertNull(checkDeleted);
     }
+
+    @Test
+    void testAmountPaid() {
+        // p1 has fees: 125 + 150 = 275 (from PersonPopulator)
+        int totalP1 = dolphinDAO.getAmountPaid(p1.getId());
+        assertEquals(275, totalP1);
+
+        // p2 has fees: 200 + 180 = 380 (from PersonPopulator)
+        int totalP2 = dolphinDAO.getAmountPaid(p2.getId());
+        assertEquals(380, totalP2);
+    }
 }
