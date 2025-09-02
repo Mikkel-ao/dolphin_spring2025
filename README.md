@@ -86,9 +86,9 @@ entityManager.persist(d); // Fees følger med pga. CascadeType.ALL
 ### config.properties
 
 ```
-DB_NAME=dolphin
-DB_USERNAME=postgres
-DB_PASSWORD=postgres
+DB_NAME=db
+DB_USERNAME=username
+DB_PASSWORD=password
 ```
 
 ---
