@@ -3,6 +3,7 @@ package app.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +31,13 @@ public class Person
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     @Builder.Default  // <---- This one is necessary with @Builder
+    @ToString.Exclude
     private Set<Fee> fees = new HashSet<>();
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    @Builder.Default  // <---- This one is necessary with @Builder
+    @ToString.Exclude
+    private Set<Note> notes = new HashSet<>();
 
     // Bi-directional update
 
@@ -51,5 +58,15 @@ public class Person
             fee.setPerson(this);
         }
     }
+
+    public void addNote(Note note)
+    {
+        this.notes.add(note);
+        if (note != null)
+        {
+            note.setPerson(this);
+        }
+    }
+
 
 }
