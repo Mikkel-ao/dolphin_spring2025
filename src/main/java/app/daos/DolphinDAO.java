@@ -29,7 +29,11 @@ public class DolphinDAO implements IDAO<Person, Integer> {
 
     @Override
     public Person getById(Integer id) {
-        return null;
+        try (EntityManager em = emf.createEntityManager()) {
+            return em.find(Person.class, id);
+        } catch (Exception e) {
+            throw new ApiException(500, "Error getting person " + e.getMessage());
+        }
     }
 
     @Override
@@ -56,6 +60,13 @@ public class DolphinDAO implements IDAO<Person, Integer> {
 
     @Override
     public boolean delete(Integer id) {
-        return false;
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            em.remove(em.find(Person.class, id));
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            throw new ApiException(500, "Error deleting person: " + e.getMessage());
+        }
     }
 }
