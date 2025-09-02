@@ -4,6 +4,7 @@ import app.entities.Person;
 import app.exceptions.ApiException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -68,5 +69,18 @@ public class DolphinDAO implements IDAO<Person, Integer> {
         } catch (Exception e) {
             throw new ApiException(500, "Error deleting person: " + e.getMessage());
         }
+    }
+
+    @Override
+    public int getAmountPaid(Integer personId) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Long total = em.createQuery(
+            "SELECT COALESCE(SUM(f.amount), 0) FROM Fee f WHERE f.person.id = :personId", Long.class)
+                    .setParameter("personId", personId)
+                    .getSingleResult();
+            return total.intValue();
+        } catch (Exception e) {
+        throw new ApiException(500, "Error getting amount paid for person " + e.getMessage());}
     }
 }

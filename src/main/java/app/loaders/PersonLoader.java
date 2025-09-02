@@ -1,4 +1,4 @@
-package app.loader;
+package app.loaders;
 
 import app.daos.DolphinDAO;
 import app.entities.Fee;
@@ -19,7 +19,7 @@ public class PersonLoader {
         this.dolphinDAO = new DolphinDAO(emf);
     }
 
-    // Helper method to create a new Person with details, fees, and notes
+    // Helper method reduce repetition when creating person
     private Person newPerson(String name, String address, int zipCode, String city, int age,
                              int feeAmount1, LocalDate feeDate1,
                              int feeAmount2, LocalDate feeDate2,
@@ -42,6 +42,7 @@ public class PersonLoader {
 
         return person;
     }
+
 
     public List<Person> loadData() {
         List<Person> people = new ArrayList<>();

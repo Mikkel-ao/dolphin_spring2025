@@ -8,4 +8,6 @@ public interface IDAO<T, I> {
     List<T> getAll();
     T update(T t);
     boolean delete(I id);
+    int getAmountPaid(I id);
+
 }

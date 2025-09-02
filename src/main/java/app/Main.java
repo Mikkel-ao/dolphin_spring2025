@@ -3,7 +3,7 @@ package app;
 import app.config.HibernateConfig;
 import app.daos.DolphinDAO;
 import app.entities.Person;
-import app.loader.PersonLoader;
+import app.loaders.PersonLoader;
 import jakarta.persistence.EntityManagerFactory;
 
 import java.util.List;
@@ -38,6 +38,10 @@ public class Main {
         Person updatedPerson = dolphinDAO.update(fetchedPerson);
         System.out.println("\nUpdated Person:");
         System.out.println(updatedPerson);
+
+        // US-2 Get total BEFORE deletion
+        double totalPaid = dolphinDAO.getAmountPaid(fetchedPerson.getId());
+        System.out.println("\nTotal amount paid by " + fetchedPerson.getName() + ": " + totalPaid);
 
         // DELETE a Person
         boolean deleted = dolphinDAO.delete(updatedPerson.getId());
