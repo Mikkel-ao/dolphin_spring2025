@@ -51,6 +51,12 @@ public class Main {
         Person checkDeleted = dolphinDAO.getById(updatedPerson.getId());
         System.out.println("\nCheck Deleted Person (should be null): " + checkDeleted);
 
+        System.out.println("\nAll Notes and Person Info with dto");
+        dolphinDAO.getNotesAndPersonInfo().forEach(System.out::println);
+
+        System.out.println("\nAll Notes and Person Info with record");
+        dolphinDAO.getAllNotesAndPersonInfo().forEach(System.out::println);
+
         emf.close();
     }
 }

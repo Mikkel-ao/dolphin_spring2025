@@ -1,5 +1,7 @@
 package app.daos;
 
+import app.dtos.NotePersonDTO;
+import app.dtos.NotePersonRecordDTO;
 import app.entities.Person;
 import app.exceptions.ApiException;
 import jakarta.persistence.EntityManager;
@@ -82,5 +84,23 @@ public class DolphinDAO implements IDAO<Person, Integer> {
             return total.intValue();
         } catch (Exception e) {
         throw new ApiException(500, "Error getting amount paid for person " + e.getMessage());}
+    }
+
+    public List<NotePersonDTO> getNotesAndPersonInfo() {
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<NotePersonDTO> query = em.createQuery(
+                    "SELECT new app.dtos.NotePersonDTO(n.note, p.name, pd.age) " +
+                            "FROM Note n JOIN n.person p JOIN p.personDetail pd",
+                    NotePersonDTO.class);
+            return query.getResultList();
+        }
+    }
+
+    public List<NotePersonRecordDTO> getAllNotesAndPersonInfo(){
+        try (EntityManager em = emf.createEntityManager()){
+            TypedQuery<NotePersonRecordDTO> query =
+                    em.createQuery("SELECT new app.dtos.NotePersonRecordDTO(n.note, p.name, pd.age) FROM Note n JOIN n.person p JOIN p.personDetail pd", NotePersonRecordDTO.class);
+            return query.getResultList();
+        }
     }
 }
